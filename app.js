@@ -14,7 +14,7 @@ main()
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/yelp')
         .then(() => {
-            console.log('MONGO connection open') 
+            console.log('MONGO connection is open') 
         })
         .catch(err => {
             console.log('MONGO connection error', err);
@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
+//test route
 app.get('/makecampground', async (req, res) => {
     const camp = new CampGround({ title: 'Backyad',description:'cheap'})
     await camp.save();
