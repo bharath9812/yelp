@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit CampGround</title>
+</head>
+<body>
+    <h1>Edit the Campground</h1>
+    <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="campground[title]" value="<%= campground.title  %>">
+        </div>
+        <div>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="campground[location]" value="<%= campground.location %>">
+        </div>
+
+        <button>Submit the Edit</button>
+
+
+    </form>
+
+    <a href="/campgrounds/<%= campground._id  %>">Back to Campground</a>
+</body>
+</html>
