@@ -1,7 +1,8 @@
-// npm i express mongoose ejs method-override
+// npm i express mongoose ejs method-override ejs-mate
 
 
 const express = require('express');
+const ejsMate = require('ejs-mate');
 
 const app = express();
 // requiring path to set absolute path for the /views
@@ -39,7 +40,7 @@ app.set('views', path.join(__dirname, 'views'));
 // to parse the payload of req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method')) // method for our query string
-
+app.engine('ejs',ejsMate,);
 
 // ===============================================================================================================
 
