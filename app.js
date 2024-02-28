@@ -1,4 +1,4 @@
-// npm i express mongoose ejs method-override ejs-mate // npm packages used
+// npm i express mongoose ejs method-override ejs-mate // npm packages used (install these first)
 
 
 const express = require('express');
