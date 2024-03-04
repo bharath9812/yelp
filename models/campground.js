@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
+const Review = require('./review')
 const Schema = mongoose.Schema;
-
 
 const CampgroundSchema = new Schema({
     title: String,
@@ -16,6 +16,16 @@ const CampgroundSchema = new Schema({
     ]
 });
 
-const Campground = mongoose.model('CampGround', CampgroundSchema);
+// to handle orphaned review by deletion of a campground
+CampgroundSchema.post('findOneAndDelete', async function (doc) {
+    // console.log('deleting review', doc);
+    if (doc) {
+        await Review.deleteMany({
+            _id: {
+                $in: doc.reviews
+            }
+        })
+    }
+})
 
-module.exports = Campground; 
+module.exports = mongoose.model('Campground', CampgroundSchema);

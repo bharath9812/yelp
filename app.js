@@ -150,6 +150,7 @@ app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res)
     res.redirect(`/campgrounds/${campground._id}`);
 }))
 
+// findByIdAndDelete on triggers the findOneAndDelete middleware defined in campground.js
 app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await CampGround.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); // pull used like a index to get from an array
