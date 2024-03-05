@@ -84,7 +84,7 @@ app.engine('ejs',ejsMate,);
 
 // =================================================================================================================
 
-// express sessions
+// express sessions for authentication
 
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',
