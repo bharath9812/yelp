@@ -49,18 +49,19 @@ router.post('/', isLoggedIn, validateCampground, catchAsync(async (req, res,next
 
 // show route
 router.get('/:id', catchAsync(async (req, res,) => {
-    const campground = await CampGround.findById(req.params.id).populate('reviews').populate('author');
+    const campground = await CampGround.findById(req.params.id).populate({
+            path: 'reviews',
+            populate: {
+                path: 'author'
+            }
+    }).populate('author');
+    // console.log(campground);
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
     res.render('campgrounds/show', { campground });
 }));
-// app.get('/campgrounds/:id', catchAsync(async (req, res) => {
-//     const id = req.params.id;
-//     const campground = await CampGround.findById(id);
-//     res.render('campgrounds/show', {campground})
-// }))
 
 // route to edit the campground 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
