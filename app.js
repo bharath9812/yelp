@@ -12,8 +12,11 @@ const Joi = require('joi');
 const session = require('express-session');
 const flash = require('connect-flash');
 const { campgroundSchema, reviewSchema } = require('./schemas.js')
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
 //getting the model
+const User = require('./models/user');
 const CampGround = require('./models/campground');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
@@ -106,6 +109,14 @@ app.use(session(sessionConfig));
 // connect-flash ======================================================
 
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser()); // store
+passport.deserializeUser(User.deserializeUser()); // unstore
+
 
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
