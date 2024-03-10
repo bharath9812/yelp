@@ -7,23 +7,10 @@ const { campgroundSchema} = require('../schemas.js')
 const CampGround = require('../models/campground');
 const catchAsync = require('../utils/catchAsync');
 
-const { isLoggedIn } = require('../middleware');
+const { isLoggedIn, isAuthor, validateCampground } = require('../middleware');
 
 
-// data validation middleware
 
-const validateCampground = (req, res, next) => {
-
-    const { error } = campgroundSchema.validate(req.body);
-    if (error) {        
-        const msg = error.details.map(el => el.message).join(',');
-        throw new ExpressError(msg, 400);
-    }
-    else {
-        next();
-    }
-    // console.log(result);
-}
 
 
 
@@ -76,30 +63,28 @@ router.get('/:id', catchAsync(async (req, res,) => {
 // }))
 
 // route to edit the campground 
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const id = req.params.id;
     const campground = await CampGround.findById(id);
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
-
     res.render('campgrounds/edit.ejs', {campground})
 }))
 
 // put request to submit the edit form
 
-router.put('/:id', isLoggedIn, validateCampground, catchAsync(async (req, res) => {
+router.put('/:id', isAuthor, isLoggedIn, isAuthor, validateCampground, catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await CampGround.findByIdAndUpdate(id, { ...req.body.campground });
-    // res.send('updated');
     req.flash('success', 'Successfully updated campground!');
     res.redirect(`/campgrounds/${campground._id}`)
 }))
 
 // route to delete the campground
 
-router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     await CampGround.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted campground')
