@@ -1,4 +1,4 @@
-// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session
+// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport
 
 //requiring packages needed
 const express = require('express');
