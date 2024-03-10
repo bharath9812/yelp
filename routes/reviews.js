@@ -3,7 +3,7 @@ const express = require('express');
 //by default express router like to keep params separate
 //(id can't be accessed from ' / campgrounds /: id / reviews'), so we merge the params
 const router = express.Router({ mergeParams: true});
-
+const { validateReview } = require('../middleware.js');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError');
 
@@ -12,17 +12,6 @@ const CampGround = require('../models/campground');
 
 const { reviewSchema } = require('../schemas.js')
 
-// validation middle ware
-
-const validateReview = (req, res, next) => {
-    const { error } = reviewSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
 
 
 // old route '/campgrounds/:id/reviews'
