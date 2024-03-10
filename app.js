@@ -22,8 +22,9 @@ const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const Review = require('./models/review');
 
-const campgrounds = require(('./routes/campground.js'))
-const reviews = require(('./routes/reviews.js'))
+const campgroundRoutes = require(('./routes/campground.js'))
+const reviewRoutes = require(('./routes/reviews.js'))
+const userRoutes = require(('./routes/users.js'))
 
 // ====================================================================================================
 // connecting mongoose
@@ -56,33 +57,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method')) // method for our query string
 app.engine('ejs',ejsMate,);
-
-// ===============================================================================================================
-
-// data validation middleware
-
-// const validateCampground = (req, res, next) => {
-    
-//     const {error} = campgroundSchema.validate(req.body);
-//     if (error) {
-//         const msg = error.details.map(el => el.message).join(',');
-//         throw new ExpressError(msg, 400);
-//     }
-//     else {
-//         next();
-//     }
-//     // console.log(result);
-// }
-
-// const validateReview = (req, res, next) => {
-//     const { error } = reviewSchema.validate(req.body);
-//     if (error) {
-//         const msg = error.details.map(el => el.message).join(',')
-//         throw new ExpressError(msg, 400)
-//     } else {
-//         next();
-//     }
-// }
 
 
 // =================================================================================================================
@@ -119,6 +93,8 @@ passport.deserializeUser(User.deserializeUser()); // unstore
 
 
 app.use((req, res, next) => {
+    // console.log(req.session)
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -127,8 +103,9 @@ app.use((req, res, next) => {
 
 
 // routes
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/', userRoutes);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
 
 
 app.get('/', (req, res) => {
@@ -136,6 +113,16 @@ app.get('/', (req, res) => {
 })
 
 
+// // Catch-all route for handling undefined routes
+// app.get('*', (req, res) => {
+//     res.status(404).send('Page Not Found');
+// });
+
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
+    // res.send("Not found");
+});
 
 
 app.use((err, req, res, next) => {
@@ -143,11 +130,6 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Something Went Wrong!'
     res.status(statusCode).render('error', { err })
 })
-
-app.all('*', (req, res, next) => {
-    next(new ExpressError('Page Not Found', 404))
-    // res.send("Not found");
-});
 
 
 

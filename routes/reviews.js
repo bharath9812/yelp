@@ -25,7 +25,6 @@ const validateReview = (req, res, next) => {
 }
 
 
-
 // old route '/campgrounds/:id/reviews'
 router.post('/', validateReview, catchAsync(async (req, res) => {
     const campground = await CampGround.findById(req.params.id);
