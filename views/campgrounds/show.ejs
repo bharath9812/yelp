@@ -33,7 +33,7 @@
                 <li class="list-group-item text-muted"><%= campground.location%></li>
                 <li class="list-group-item">Submitted by <%= campground.author.username%></li>
                 <li class="list-group-item">$<%= campground.price%>/night</li>
-         s   </ul>
+            </ul>
             <%  if( currentUser && campground.author.equals(currentUser._id))  {%>
             <div class="card-body">
                 <a class="card-link btn btn-info" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
