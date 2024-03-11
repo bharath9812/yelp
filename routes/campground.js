@@ -18,32 +18,33 @@ const campgrounds = require('../controllers/campgrounds');
     //      RESTFUL ROUTES
 
 
-// index route
-router.get('/', catchAsync(campgrounds.index));
+// index route and 
+// new campground form end point to post req
+router.route('/')
+    .get(catchAsync(campgrounds.index))
+    .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground));
+
 
 
 // route to create new campgrounds
 router.get('/new', isLoggedIn, campgrounds.newForm)
 
 
-// new campground form end point to post req
-router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground));
-
-
 // show route
-router.get('/:id', catchAsync(campgrounds.showCampground));
+// put request to submit the edit form
+// route to delete the campground
+
+router.route('/:id')
+    .get(catchAsync(campgrounds.showCampground))
+    .put(isAuthor, isLoggedIn, isAuthor, validateCampground,
+        catchAsync(campgrounds.updateCamp))
+    .delete(isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCamp))
+
 
 
 // route to edit the campground 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.editForm))
 
 
-// put request to submit the edit form
-router.put('/:id', isAuthor, isLoggedIn, isAuthor, validateCampground,
-    catchAsync(campgrounds.updateCamp));
-
-
-// route to delete the campground
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(campgrounds.deleteCamp))
 
 module.exports = router;
