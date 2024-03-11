@@ -1,4 +1,8 @@
-// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
+// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary
 
 //requiring packages needed
 const express = require('express');
