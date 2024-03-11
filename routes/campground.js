@@ -15,7 +15,7 @@ const campgrounds = require('../controllers/campgrounds');
 
 
 
-                            //      RESTFUL ROUTES
+    //      RESTFUL ROUTES
 
 
 // index route
