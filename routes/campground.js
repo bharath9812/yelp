@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const multer = require('multer');
+const { storage } = require('../cloudinary/index');
+// const upload = multer({ dest: 'uploads/'  }) // for local storage
+const upload = multer({ storage })
+
 const ExpressError = require('../utils/ExpressError');
 const { campgroundSchema} = require('../schemas.js')
 
@@ -15,6 +20,7 @@ const campgrounds = require('../controllers/campgrounds');
 
 
 
+
     //      RESTFUL ROUTES
 
 
@@ -22,7 +28,11 @@ const campgrounds = require('../controllers/campgrounds');
 // new campground form end point to post req
 router.route('/')
     .get(catchAsync(campgrounds.index))
-    .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground));
+    .post(isLoggedIn, upload.array('image'), validateCampground,  catchAsync(campgrounds.createCampground));
+    // .post(upload.array('image'), (req, res) => {
+    //     console.log(req.body, req.files);
+    //     res.send('worked');
+    // })
 
 
 
