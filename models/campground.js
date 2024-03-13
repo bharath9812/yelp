@@ -7,9 +7,12 @@ const ImageSchema = new Schema({
     filename: String
 });
 
+// virtual for displaying the image thumbnail to select for deletion
 ImageSchema.virtual('thumbnail').get(function () {
     return this.url.replace('/upload', '/upload/w_100');
 });
+
+const opts = { toJSON: { virtuals: true } };
 
 const CampgroundSchema = new Schema({
     title: String,
@@ -39,7 +42,16 @@ const CampgroundSchema = new Schema({
             ref: 'Review'
         }
     ]
+},opts);
+
+// mongo virutal for map popup's
+CampgroundSchema.virtual('properties.popUpMarkup').get(function () {
+    return `
+    <strong><a href="/campgrounds/${this._id}">${this.title}</a><strong>
+    <p>${this.description.substring(0, 20)}...</p>`
 });
+
+
 
 // to handle orphaned review by deletion of a campground
 CampgroundSchema.post('findOneAndDelete', async function (doc) {
