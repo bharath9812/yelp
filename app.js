@@ -36,9 +36,10 @@ const userRoutes = require(('./routes/users.js'))
 
 // ====================================================================================================
 // connecting mongoose
+const dbUrl = process.env.DB_URL
 
 main()
-
+//'mongodb://127.0.0.1:27017/yelp'
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/yelp')
         .then(() => {
@@ -48,6 +49,16 @@ async function main() {
             console.log('MONGO connection error', err);
     })
 } 
+
+
+
+// mongoose
+//     .connect(dbUrl, { 
+//         useNewUrlParser: true,
+//         useCreateIndex: true
+//       })
+//     .then(() => console.log('MongoDB connected...'))
+//     .catch(err => console.log(err));
 
 
 
