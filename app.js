@@ -38,13 +38,13 @@ const userRoutes = require(('./routes/users.js'))
 
 // ====================================================================================================
 // connecting mongoose
-// const dbUrl = process.env.DB_URL
+const dbUrlCloud = process.env.DB_URL
 const dbUrl = 'mongodb://127.0.0.1:27017/yelp'
 
 main()
 
 async function main() {
-    await mongoose.connect(dbUrl)
+    await mongoose.connect(dbUrlCloud)
         .then(() => {
             console.log('MONGO connection is open') 
         })
