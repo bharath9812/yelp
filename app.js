@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary @mapbox/mapbox-sdk
+// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary @mapbox/mapbox-sdk express-mongo-sanitize
 
 //requiring packages needed
 const express = require('express');
@@ -18,6 +18,7 @@ const flash = require('connect-flash');
 const { campgroundSchema, reviewSchema } = require('./schemas.js')
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize');
 
 //getting the model
 const User = require('./models/user');
@@ -60,7 +61,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 // to parse the payload of req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method')) // method for our query string
-app.engine('ejs',ejsMate,);
+app.engine('ejs', ejsMate,);
+app.use(mongoSanitize);
 
 
 // =================================================================================================================
