@@ -41,17 +41,26 @@ const userRoutes = require(('./routes/users.js'))
 const dbUrlCloud = process.env.DB_URL
 const dbUrl = 'mongodb://127.0.0.1:27017/yelp'
 
-main()
+mongoose.connect(dbUrlCloud);
 
-async function main() {
-    await mongoose.connect(dbUrlCloud)
-        .then(() => {
-            console.log('MONGO connection is open') 
-        })
-        .catch(err => {
-            console.log('MONGO connection error', err);
-    })
-} 
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+  console.log("Database connected");
+});
+
+// main()
+
+// async function main() {
+//     await mongoose.connect(dbUrlCloud)
+//         .then(() => {
+//             console.log('MONGO connection is open') 
+//         })
+//         .catch(err => {
+//             console.log('MONGO connection error', err);
+//     })
+// } 
 
 
 
