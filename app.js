@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 // require('dotenv').config();
 
 
-// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary @mapbox/mapbox-sdk express-mongo-sanitize
+// npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary @mapbox/mapbox-sdk express-mongo-sanitize connect-mongo@3.2.0
 
 //requiring packages needed
 const express = require('express');
@@ -22,13 +22,15 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const MongoDBStore = require('connect-mongo')(session);
 
-//getting the model
+//getting the models
 const User = require('./models/user');
 const CampGround = require('./models/campground');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const Review = require('./models/review');
+const { MongoStore } = require('connect-mongo');
 
 const campgroundRoutes = require(('./routes/campground.js'))
 const reviewRoutes = require(('./routes/reviews.js'))
@@ -36,12 +38,13 @@ const userRoutes = require(('./routes/users.js'))
 
 // ====================================================================================================
 // connecting mongoose
-const dbUrl = process.env.DB_URL
+// const dbUrl = process.env.DB_URL
+const dbUrl = 'mongodb://127.0.0.1:27017/yelp'
 
 main()
-//'mongodb://127.0.0.1:27017/yelp'
+
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/yelp')
+    await mongoose.connect(dbUrl)
         .then(() => {
             console.log('MONGO connection is open') 
         })
@@ -85,7 +88,18 @@ app.use(mongoSanitize({
 
 // express sessions for authentication
 
+const store = new MongoDBStore({
+    url: dbUrl,
+    secret: 'thisshouldbeabettersecret!',
+    touchAfter: 24 * 60 * 60
+})
+
+store.on("error", function (e) {
+    console.log('session store error', e);
+})
+
 const sessionConfig = {
+    store: store,
     name: 'userC',
     secret: 'thisshouldbeabettersecret!',
     //including resave and saveUninitialized to handle the deprecations
