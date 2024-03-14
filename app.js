@@ -72,6 +72,7 @@ app.use(mongoSanitize({
 // express sessions for authentication
 
 const sessionConfig = {
+    name: 'userC',
     secret: 'thisshouldbeabettersecret!',
     //including resave and saveUninitialized to handle the deprecations
     resave: false,
