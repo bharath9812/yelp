@@ -90,7 +90,8 @@ app.use(mongoSanitize({
 
 const store = new MongoDBStore({
     url: dbUrl,
-    secret: 'thisshouldbeabettersecret!',
+    // secret: 'thisshouldbeabettersecret!',
+    secret: process.env.DB_URL,
     touchAfter: 24 * 60 * 60
 })
 
@@ -101,7 +102,8 @@ store.on("error", function (e) {
 const sessionConfig = {
     store: store,
     name: 'userC',
-    secret: 'thisshouldbeabettersecret!',
+    secret: process.env.DB_URL,
+    // secret: 'thisshouldbeabettersecret!',
     //including resave and saveUninitialized to handle the deprecations
     resave: false,
     saveUninitialized: true,
