@@ -62,7 +62,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method')) // method for our query string
 app.engine('ejs', ejsMate,);
-app.use(mongoSanitize);
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
 
 
 // =================================================================================================================
