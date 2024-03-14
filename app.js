@@ -41,6 +41,8 @@ const userRoutes = require(('./routes/users.js'))
 const dbUrlCloud = process.env.DB_URL
 const dbUrl = 'mongodb://127.0.0.1:27017/yelp'
 
+
+// =================================
 mongoose.connect(dbUrlCloud);
 
 
@@ -49,7 +51,7 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
   console.log("Database connected");
 });
-
+// ========================================================================================================
 // main()
 
 // async function main() {
@@ -62,7 +64,7 @@ db.once("open", () => {
 //     })
 // } 
 
-
+// ========================================================================================================
 
 // mongoose
 //     .connect(dbUrl, { 
@@ -71,7 +73,7 @@ db.once("open", () => {
 //       })
 //     .then(() => console.log('MongoDB connected...'))
 //     .catch(err => console.log(err));
-
+// =============================================================
 
 
 // ====================================================================================================
@@ -98,7 +100,7 @@ app.use(mongoSanitize({
 // express sessions for authentication
 
 const store = new MongoDBStore({
-    url: dbUrl,
+    url: dbUrlCloud,
     // secret: 'thisshouldbeabettersecret!',
     secret: process.env.DB_URL,
     touchAfter: 24 * 60 * 60
