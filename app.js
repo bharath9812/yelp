@@ -1,6 +1,8 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
+// require('dotenv').config();
+
 
 // npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary @mapbox/mapbox-sdk express-mongo-sanitize
 
@@ -19,6 +21,7 @@ const { campgroundSchema, reviewSchema } = require('./schemas.js')
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 //getting the model
 const User = require('./models/user');
@@ -86,12 +89,55 @@ const sessionConfig = {
 }
 
 app.use(session(sessionConfig));
-
-
-
-// connect-flash ======================================================
-
 app.use(flash());
+// app.use(helmet({contentSecurityPolicy: false}));
+app.use(helmet());
+
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.mapbox.com/",
+    "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.tiles.mapbox.com/",
+    "https://b.tiles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/dgbzkix4o/", 
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -120,12 +166,6 @@ app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.get('/', (req, res) => {
     res.render('home')
 })
-
-
-// // Catch-all route for handling undefined routes
-// app.get('*', (req, res) => {
-//     res.status(404).send('Page Not Found');
-// });
 
 
 app.all('*', (req, res, next) => {
