@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-// require('dotenv').config();
+// require('dotenv').config(); during development;
 
 
 // npm i express mongoose ejs method-override ejs-mate joi connect-flash path express-session passport passport dotenv multer cloudinary multer-storage-cloudinary @mapbox/mapbox-sdk express-mongo-sanitize connect-mongo@3.2.0
