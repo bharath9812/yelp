@@ -47,3 +47,21 @@ YelpCamp is hosted on Render and connected with MongoDB Atlas for database stora
    cd yelpcamp
    npm install
    ```
+
+3. **Set up environment variables**
+   Create a .env file in the root directory and add the following variables:
+
+   ```
+   PORT=3000
+   MONGODB_URI=your-mongodb-uri
+   MAPBOX_TOKEN=your-mapbox-token
+   CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
+   CLOUDINARY_API_KEY=your-cloudinary-api-key
+   CLOUDINARY_API_SECRET=your-cloudinary-api-secret
+   ```
+
+4. **MongoDB**
+   Open a new terminal and type `brew services start mongodb-community` to start your local mongodb for the project to work on your local database.
+   ```bash
+   brew services start mongodb-community
+   ```
