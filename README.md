@@ -20,20 +20,20 @@ YelpCamp is a web application designed for campground exploration and creation. 
 
 ## Screenshots
 
-![Homepage](screenshots/home.png)
+![Homepage](assets/home.png)
 _Homepage of Yelp Camp._
 
-![Campgrounds](screenshots/campgrounds.png)
+![Campgrounds](assets/campgrounds.png)
 _Map box plots of the submitted campgrounds and followed by the list of campground available._
 
-![Campground_Index](screenshots/camp_index.png)
+![Campground_Index](assets/camp_index.png)
 _Details of Campground with location,pricing,images and reviews._
 
 ## Deployment
 
 YelpCamp is hosted on Render and connected with MongoDB Atlas for database storage. [View Here](https://yelpcamp-india-vric.onrender.com/)
 
-## To run the project locally, follow these steps:
+<!-- ## To run the project locally, follow these steps:
 
 1. **Clone the repository:**
 
@@ -49,7 +49,8 @@ YelpCamp is hosted on Render and connected with MongoDB Atlas for database stora
    ```
 
 3. **Set up environment variables**
-   Create a .env file in the root directory and add the following variables:
+
+   _Create a .env file in the root directory and add the following variables:_
 
    ```
    PORT=3000
@@ -64,4 +65,4 @@ YelpCamp is hosted on Render and connected with MongoDB Atlas for database stora
    Open a new terminal and type `brew services start mongodb-community` to start your local mongodb for the project to work on your local database.
    ```bash
    brew services start mongodb-community
-   ```
+   ``` -->
