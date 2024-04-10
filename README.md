@@ -28,3 +28,7 @@ _Map box plots of the submitted campgrounds and followed by the list of campgrou
 
 ![Campground_Index](screenshots/camp_index.png)
 _Details of Campground with location,pricing,images and reviews._
+
+## Deployment
+
+YelpCamp is hosted on Render and connected with MongoDB Atlas for database storage. [![View Herfe](yelpcamp-india-vric.onrender.com)
