@@ -17,3 +17,14 @@ YelpCamp is a web application designed for campground exploration and creation. 
 - **CRUD Functionality:** Users can create, read, update, and delete campgrounds and comments.
 - **Campground Exploration:** Interactive maps allow users to explore campgrounds and view their locations.
 - **Responsive Design:** The application is designed to be accessible and usable across various devices and screen sizes.
+
+## Screenshots
+
+![Homepage](screenshots/home.png)
+_Homepage of Yelp Camp._
+
+![Campgrounds](screenshots/campgrounds.png)
+_Map box plots of the submitted campgrounds and followed by the list of campground available._
+
+![Campground_Index](screenshots/camp_index.png)
+_Details of Campground with location,pricing,images and reviews._
