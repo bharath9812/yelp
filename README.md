@@ -32,3 +32,18 @@ _Details of Campground with location,pricing,images and reviews._
 ## Deployment
 
 YelpCamp is hosted on Render and connected with MongoDB Atlas for database storage. [View Here](https://yelpcamp-india-vric.onrender.com/)
+
+## To run the project locally, follow these steps:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/your-username/yelpcamp.git
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   cd yelpcamp
+   npm install
+   ```
