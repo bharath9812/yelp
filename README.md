@@ -31,4 +31,4 @@ _Details of Campground with location,pricing,images and reviews._
 
 ## Deployment
 
-YelpCamp is hosted on Render and connected with MongoDB Atlas for database storage. [![View Herfe](yelpcamp-india-vric.onrender.com)
+YelpCamp is hosted on Render and connected with MongoDB Atlas for database storage. [View Here](yelpcamp-india-vric.onrender.com)
