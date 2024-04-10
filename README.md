@@ -66,3 +66,8 @@ YelpCamp is hosted on Render and connected with MongoDB Atlas for database stora
    ```bash
    brew services start mongodb-community
    ``` -->
+
+<!-- ## Acknowledgements
+
+_This project was developed as part of a web development course on Udemy._
+_Special thanks to the Colt Steel for the guidance._ -->
